@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LoFi · School Lost & Found</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Icon set: drawn as SVG symbols, used with <svg class="i"><use href="#i-name"/></svg> -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 8h12l1.5 12h-15z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8 3 3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h14v15H6a2 2 0 0 0-2 2z"/><path d="M4 20a2 2 0 0 0 2 1h14"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M16 7l3 3"/></symbol>
+  <symbol id="i-bottle" viewBox="0 0 24 24"><path d="M10 2h4v3l1.5 3v12a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2V8L10 5z"/><path d="M8.5 12h7"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 8h4l2-3h6l2 3h4v12H3z"/><circle cx="12" cy="13.5" r="3.5"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></symbol>
+</svg>
+
+<header class="top">
+  <a class="logo" href="#home"><span class="moon"></span>LoFi</a>
+  <nav id="nav" aria-label="Main"></nav>
+</header>
+
+<main>
+  <section id="v-home">
+    <div class="hero">
+      <h1>Lost something?<br>Let's find it.</h1>
+      <p>Search what the school has found, or tell us what's missing.</p>
+      <div class="search"><input id="q" type="search" placeholder='Try "blue bottle" or "phone"' aria-label="Search items"><button class="btn light" id="searchBtn"><svg class="i"><use href="#i-search"/></svg> Search</button></div>
+    </div>
+    <div class="wrap">
+      <div class="chips" id="chips" role="tablist" aria-label="Categories"></div>
+      <form id="filters" class="filters">
+        <label>Type<select name="type"><option value="">Lost and found</option><option value="lost">Lost</option><option value="found">Found</option></select></label>
+        <label>Status<select name="status"><option value="">Any status</option><option value="open">Open</option><option value="reviewing">Read by security</option><option value="waitlisted">Waitlisted</option><option value="matched">Matched</option><option value="returned">Returned</option></select></label>
+        <label>Since<input type="date" name="from"></label>
+        <label class="priv" hidden>Location<input name="location" placeholder="e.g. Library"></label>
+        <label>Sort<select name="sort"><option value="new">Newest first</option><option value="old">Oldest first</option></select></label>
+        <button type="reset" class="link">Clear filters</button>
+      </form>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section id="v-report" class="wrap narrow" hidden>
+    <h2>Report an item</h2>
+    <form id="reportForm" class="panel">
+      <div class="seg"><label><input type="radio" name="type" value="lost" checked><span>I lost something</span></label><label><input type="radio" name="type" value="found"><span>I found something</span></label></div>
+      <label>What is it?<input name="title" required placeholder="e.g. Black Samsung phone"></label>
+      <label>Category<select name="category" id="catSelect"></select></label>
+      <label>Describe it<textarea name="description" rows="3" placeholder="Colour, brand, marks, anything that proves it's yours"></textarea></label>
+      <div class="two"><label>Where?<input name="location" placeholder="e.g. Library"></label><label>When?<input name="date" type="date"></label></div>
+      <label>Photo (optional)<input name="photofile" type="file" accept="image/*"><small class="hint"><svg class="i"><use href="#i-lock"/></svg> Only security staff can see your photo.</small></label>
+      <button class="btn">Send report</button>
+    </form>
+  </section>
+
+  <section id="v-chat" class="wrap" hidden>
+    <h2>Talk to security</h2>
+    <div class="chatbox">
+      <aside id="threads" hidden></aside>
+      <div class="convo"><div id="msgs" class="msgs"></div>
+        <form id="chatForm" class="send"><input id="chatInput" placeholder="Write a message…" autocomplete="off" aria-label="Message"><button class="btn"><svg class="i"><use href="#i-send"/></svg> Send</button></form></div>
+    </div>
+  </section>
+
+  <section id="v-alerts" class="wrap narrow" hidden>
+    <h2>Alerts & reminders</h2>
+    <div class="panel"><h3>Updates</h3><div id="notes"></div></div>
+    <div class="panel"><h3>Reminders</h3><div id="rems"></div>
+      <form id="remForm" class="two">
+        <label>Remind me to<input name="note" placeholder="Check on my phone"></label>
+        <label>On<input name="remind_at" type="datetime-local" required></label>
+        <button class="btn">Add reminder</button>
+      </form></div>
+  </section>
+</main>
+
+<dialog id="auth">
+  <form id="authForm" method="dialog">
+    <div class="seg"><label><input type="radio" name="mode" value="login" checked><span>Sign in</span></label><label><input type="radio" name="mode" value="register"><span>Create account</span></label></div>
+    <p id="authMsg" class="hint"></p>
+    <label class="reg" hidden>Your name<input name="name" autocomplete="name"></label>
+    <label>Email<input name="email" type="email" required autocomplete="email"></label>
+    <label>Password<input name="password" type="password" required autocomplete="current-password" minlength="6"></label>
+    <label class="reg" hidden>Confirm password<input name="confirm" type="password" autocomplete="new-password"></label>
+    <p id="authErr" class="err" role="alert"></p>
+    <button class="btn" id="authGo">Sign in</button>
+    <button type="button" class="link" id="authClose">Maybe later</button>
+  </form>
+</dialog>
+
+<button id="botBtn" class="fab" aria-label="Ask Luna, the assistant"><span class="moon"></span><b>Ask Luna</b></button>
+<div id="bot" class="bot" hidden>
+  <div class="bot-head">Luna <small>your LoFi guide</small></div>
+  <div id="botMsgs" class="msgs"></div>
+  <form id="botForm" class="send"><input id="botInput" placeholder='"I lost my black phone"' autocomplete="off" aria-label="Ask Luna"><button class="btn">Ask</button></form>
+</div>
+<div id="toast" role="status"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
