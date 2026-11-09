@@ -110,7 +110,7 @@ async function remindTomorrow(id) {
   await api('/alerts/reminders', { method: 'POST', body: { item_id: Number(id), note: 'Check on this item', remind_at: d } });
   toast('Reminder set for tomorrow. Change it in Alerts.');
 }
-$('#searchBtn').onclick = loadItems; $('#q').onkeydown = e => e.key === 'Enter' && loadItems();
+$('#searchBtn').onclick = loadItems; $('#q').onkeydown = e => { if (e.key === 'Enter') loadItems(); };
 
 /* ---------- Report (with optional photo, visible to security only) ---------- */
 const shrink = file => new Promise(res => {
